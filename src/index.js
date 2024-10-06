@@ -30,8 +30,13 @@ app.post('/upload', async (c) => {
 		const dataUpload = await c.env.store_file.put(objectKey, fileContent, {
 			httpMetadata: { contentType: file.type }, // Đặt Content-Type của file
 		});
-
-		return c.json({ message: 'File uploaded successfully!', link: `${c.env.URL_DOWNLOAD}/${objectKey}`, dataUpload }, 200);
+		if (dataUpload.key) {
+			return c.json(
+				{ success: true, message: 'File uploaded successfully!', link: `${c.env.URL_DOWNLOAD}/${dataUpload.key}`, dataUpload },
+				200
+			);
+		}
+		return c.json({ success: false, message: 'upload failed', dataUpload }, 200);
 	} catch (error) {
 		return c.text(`Error: ${error.message}`, 500);
 	}
