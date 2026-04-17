@@ -32,11 +32,11 @@ app.post('/upload', async (c) => {
 		});
 		if (dataUpload.key) {
 			return c.json(
-				{ success: true, message: 'File uploaded successfully!', link: `${c.env.URL_DOWNLOAD}/${dataUpload.key}`, dataUpload },
+				{ success: true, message: 'File uploaded successfully!', link: `${c.env.URL_DOWNLOAD}/${dataUpload.key}` },
 				200
 			);
 		}
-		return c.json({ success: false, message: 'upload failed', dataUpload }, 200);
+		return c.json({ success: false, message: 'upload failed' }, 400);
 	} catch (error) {
 		return c.text(`Error: ${error.message}`, 500);
 	}
