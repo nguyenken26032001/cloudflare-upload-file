@@ -8,8 +8,12 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 import { Hono } from 'hono';
+import { cors } from "hono/cors";
 
 const app = new Hono();
+app.use("/api/*", cors());
+
+app.use("*", cors({ origin: "*" }));
 
 app.get('/', (c) => c.text('Hello from Hono on Cloudflare Workers!'));
 app.get('/hello', (c) => c.text('HELLO WORLD!'));
